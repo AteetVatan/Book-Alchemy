@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ author.name }} - Author Details</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-link {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-link:hover {
+            background: #f5f5f5;
+            border-color: #bbb;
+        }
+
+        .author-detail {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .author-name {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+
+        .author-meta {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .books-section {
+            margin-top: 30px;
+        }
+
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .book-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card:hover {
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .book-cover {
+            margin-bottom: 10px;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .book-emoji {
+            width: 100%;
+            height: 200px;
+            font-size: 80px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            border-radius: 4px;
+            text-decoration: none;
+            line-height: 1;
+            border: 1px solid #ddd;
+        }
+
+        .book-title {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .book-title:hover {
+            text-decoration: underline;
+        }
+
+        .book-year {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .delete-form {
+            margin-top: 20px;
+        }
+
+        .delete-btn {
+            background: #fff5f5;
+            color: #e53935;
+            border: 1px solid #ffcdd2;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            background: #ffebee;
+            border-color: #ef9a9a;
+        }
+
+        .warning-text {
+            color: #e53935;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .warning-icon {
+            font-size: 20px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Author Details</h1>
+        <a href="{{ url_for('show_home') }}" class="nav-link">← Back to Library</a>
+    </div>
+
+    <div class="author-detail">
+        <h2 class="author-name">{{ author.name }}</h2>
+        <div class="author-meta">
+            Born: {{ author.birth_date.strftime('%B %d, %Y') }}<br>
+            {% if author.date_of_death %}
+            Died: {{ author.date_of_death.strftime('%B %d, %Y') }}
+            {% else %}
+            Status: Living
+            {% endif %}
+        </div>
+        <form action="{{ url_for('delete_author', author_id=author.id) }}" method="POST" class="delete-form"
+            onsubmit="return confirm('⚠️ WARNING ⚠️\n\nYou are about to delete the author {{ author.name }}.\n\nThis will PERMANENTLY DELETE:\n- The author\n- ALL {{ author.books|length }} book(s) by this author\n\nThis action cannot be undone.\n\nAre you sure you want to proceed?');">
+            <div class="warning-text">
+                <span class="warning-icon">⚠️</span>
+                Deleting this author will permanently delete all {{ author.books|length }} book(s) by this author
+            </div>
+            <button type="submit" class="delete-btn">Delete Author</button>
+        </form>
+    </div>
+
+    <div class="books-section">
+        <h3>Books by {{ author.name }}</h3>
+        <div class="book-list">
+            {% for book in author.books %}
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="{{ book.cover_url }}" alt="Cover of {{ book.title }}"
+                        onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\'>📖</div>');">
+                </div>
+                <a href="{{ url_for('book_detail', book_id=book.id) }}" class="book-title">{{ book.title }}</a>
+                <span class="book-year">{{ book.publication_year }}</span>
+            </div>
+            {% else %}
+            <p>No books found for this author.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

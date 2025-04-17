@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Add Book</title>
+  <style>
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .nav-link {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-link:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
+
+    .success-message {
+      padding: 10px;
+      margin: 10px 0;
+      background: #e8f5e9;
+      border-radius: 4px;
+      color: #2e7d32;
+    }
+
+    form {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
+
+    .book-emoji {
+      width: 200px;
+      height: 280px;
+      font-size: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      border-radius: 4px;
+      text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      line-height: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Add New Book</h1>
+    <a href="{{ url_for('show_home') }}" class="nav-link">← Back to Library</a>
+  </div>
+
+  {% if message %}
+  <div class="success-message">{{ message }}</div>
+  {% endif %}
+
+  <form method="POST">
+    <div class="form-group">
+      <label for="isbn">ISBN:</label>
+      <input type="text" id="isbn" name="isbn" required maxlength="13" placeholder="Enter 13-digit ISBN">
+    </div>
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required placeholder="Enter book title">
+    </div>
+    <div class="form-group">
+      <label for="publication_year">Publication Year:</label>
+      <input type="number" id="publication_year" name="publication_year" required min="1000" max="2100"
+        placeholder="YYYY">
+    </div>
+    <div class="form-group">
+      <label for="author_id">Author:</label>
+      <select id="author_id" name="author_id" required>
+        <option value="">Select an author</option>
+        {% for author in authors %}
+        <option value="{{ author.id }}">{{ author.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit">Add Book</button>
+  </form>
+
+  <div class="book-cover-preview">
+    <img id="cover-preview" src="#" alt="Book cover preview" width="200" height="280" style="display: none;"
+      onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\' style=\'font-size: 100px;\'>📚</div>');">
+    <div class="book-emoji" id="default-cover" style="font-size: 100px;">📚</div>
+  </div>
+
+</body>
+
+</html>

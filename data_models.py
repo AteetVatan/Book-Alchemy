@@ -21,9 +21,13 @@ class Author(db.Model):
     def __str__(self):
         """string representation of the author class."""
         if self.date_of_death:
-            return self.name + ' (' + str(self.birth_date.year) + '-' + str(self.date_of_death.year) + ')'
-        else:
-            return self.name + ' (' + str(self.birth_date.year) + '-Living)'
+            return (self.name +
+                    ' (' + str(self.birth_date.year)
+                    + '-' + str(self.date_of_death.year) + ')')
+
+        return (self.name
+                + ' (' + str(self.birth_date.year)
+                + '-Living)')
 
 
 class Book(db.Model):

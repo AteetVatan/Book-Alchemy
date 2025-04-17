@@ -93,7 +93,6 @@ Book-Alchemy/
 ├── app.py              # Main application file
 ├── data_models.py      # Database models
 ├── requirements.txt    # Project dependencies
-├── populate_library.sql# Sample data SQL script
 ├── data/              # Database directory
 │   └── library.sqlite
 └── templates/         # HTML templates

@@ -45,7 +45,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Initialize the database:
+4. Application Run
 ```bash
 python app.py
 ```

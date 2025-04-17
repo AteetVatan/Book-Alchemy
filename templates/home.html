@@ -2,301 +2,304 @@
 <html>
 
 <head>
-  <title>Library Home</title>
-  <style>
-    body {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-    }
+    <title>Library Home</title>
+    <style>
+        body {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          font-family: Arial, sans-serif;
+        }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 10px;
-    }
+        .nav-links {
+          display: flex;
+          gap: 10px;
+        }
 
-    .nav-link {
-      padding: 8px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background: white;
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
+        .nav-link {
+          padding: 8px 15px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          background: white;
+          color: #333;
+          text-decoration: none;
+          font-size: 14px;
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
 
-    .nav-link:hover {
-      background: #f5f5f5;
-      border-color: #bbb;
-    }
+        .nav-link:hover {
+          background: #f5f5f5;
+          border-color: #bbb;
+        }
 
-    .controls {
-      margin: 20px 0;
-      padding: 15px;
-      border: 1px solid #eee;
-      border-radius: 5px;
-      background: #fafafa;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .controls {
+          margin: 20px 0;
+          padding: 15px;
+          border: 1px solid #eee;
+          border-radius: 5px;
+          background: #fafafa;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
 
-    .search-group {
-      flex-grow: 1;
-      display: flex;
-      gap: 5px;
-    }
+        .search-group {
+          flex-grow: 1;
+          display: flex;
+          gap: 5px;
+        }
 
-    .search-input {
-      flex-grow: 1;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-    }
+        .search-input {
+          flex-grow: 1;
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 14px;
+        }
 
-    .sort-group {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+        .sort-group {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
 
-    select {
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background: white;
-      font-size: 14px;
-      cursor: pointer;
-    }
+        select {
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          background: white;
+          font-size: 14px;
+          cursor: pointer;
+        }
 
-    select:hover {
-      border-color: #bbb;
-    }
+        select:hover {
+          border-color: #bbb;
+        }
 
-    button {
-      padding: 8px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background: white;
-      cursor: pointer;
-      font-size: 14px;
-    }
+        button {
+          padding: 8px 15px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          background: white;
+          cursor: pointer;
+          font-size: 14px;
+        }
 
-    button:hover {
-      background: #f5f5f5;
-    }
+        button:hover {
+          background: #f5f5f5;
+        }
 
-    .clear-link {
-      color: #666;
-      text-decoration: none;
-      font-size: 14px;
-    }
+        .clear-link {
+          color: #666;
+          text-decoration: none;
+          font-size: 14px;
+        }
 
-    .clear-link:hover {
-      text-decoration: underline;
-    }
+        .clear-link:hover {
+          text-decoration: underline;
+        }
 
-    .flash-message {
-      padding: 10px;
-      margin: 10px 0;
-      background: #e8f5e9;
-      border-radius: 4px;
-    }
+        .flash-message {
+          padding: 10px;
+          margin: 10px 0;
+          background: #e8f5e9;
+          border-radius: 4px;
+        }
 
-    .book {
-      padding: 15px;
-      margin: 10px 0;
-      border: 1px solid #eee;
-      border-radius: 5px;
-    }
+        .book {
+          padding: 15px;
+          margin: 10px 0;
+          border: 1px solid #eee;
+          border-radius: 5px;
+        }
 
-    .book:hover {
-      border-color: #ddd;
-      background: #fafafa;
-    }
+        .book:hover {
+          border-color: #ddd;
+          background: #fafafa;
+        }
 
-    .book img {
-      float: left;
-      margin-right: 15px;
-      min-width: 80px;
-      min-height: 100px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
+        .book img {
+          float: left;
+          margin-right: 15px;
+          min-width: 80px;
+          min-height: 100px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
 
-    .book-emoji {
-      float: left;
-      margin-right: 15px;
-      width: 80px;
-      height: 100px;
-      font-size: 50px !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f0f0f0;
-      border-radius: 4px;
-      text-decoration: none;
-      line-height: 1;
-      border: 1px solid #ddd;
-    }
+        .book-emoji {
+          float: left;
+          margin-right: 15px;
+          width: 80px;
+          height: 100px;
+          font-size: 50px !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #f0f0f0;
+          border-radius: 4px;
+          text-decoration: none;
+          line-height: 1;
+          border: 1px solid #ddd;
+        }
 
-    .book:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
+        .book:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
 
-    .book h3 {
-      margin: 0 0 10px 0;
-    }
+        .book h3 {
+          margin: 0 0 10px 0;
+        }
 
-    .book-title {
-      color: #2196F3;
-      text-decoration: none;
-    }
+        .book-title {
+          color: #2196F3;
+          text-decoration: none;
+        }
 
-    .book-title:hover {
-      text-decoration: underline;
-    }
+        .book-title:hover {
+          text-decoration: underline;
+        }
 
-    .author-link {
-      color: #2196F3;
-      text-decoration: none;
-    }
+        .author-link {
+          color: #2196F3;
+          text-decoration: none;
+        }
 
-    .author-link:hover {
-      text-decoration: underline;
-    }
+        .author-link:hover {
+          text-decoration: underline;
+        }
 
-    .delete-btn {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
+        .delete-btn {
+          background: white;
+          border: 1px solid #ddd;
+          padding: 5px 10px;
+          cursor: pointer;
+          border-radius: 4px;
+        }
 
-    .delete-btn:hover {
-      background: #fff5f5;
-      border-color: #ffa6a6;
-    }
+        .delete-btn:hover {
+          background: #fff5f5;
+          border-color: #ffa6a6;
+        }
 
-    .no-results {
-      padding: 15px;
-      color: #666;
-      text-align: center;
-      background: #fafafa;
-      border-radius: 4px;
-    }
+        .no-results {
+          padding: 15px;
+          color: #666;
+          text-align: center;
+          background: #fafafa;
+          border-radius: 4px;
+        }
 
-    .author-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .author-section {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
 
-    .author-delete-form {
-      display: inline;
-    }
+        .author-delete-form {
+          display: inline;
+        }
 
-    .author-delete-btn {
-      background: #fff5f5;
-      color: #e53935;
-      border: 1px solid #ffcdd2;
-      padding: 4px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-      margin-left: 8px;
-    }
+        .author-delete-btn {
+          background: #fff5f5;
+          color: #e53935;
+          border: 1px solid #ffcdd2;
+          padding: 4px 8px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 13px;
+          margin-left: 8px;
+        }
 
-    .author-delete-btn:hover {
-      background: #ffebee;
-      border-color: #ef9a9a;
-    }
+        .author-delete-btn:hover {
+          background: #ffebee;
+          border-color: #ef9a9a;
+        }
 
-    .warning-text {
-      color: #e53935;
-      font-weight: bold;
-    }
-  </style>
+        .warning-text {
+          color: #e53935;
+          font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="header">
+<div class="header">
     <h1>Library Catalog</h1>
     <div class="nav-links">
-      <a href="{{ url_for('add_new_author') }}" class="nav-link">📝 Add Author</a>
-      <a href="{{ url_for('add_new_book') }}" class="nav-link">📚 Add Book</a>
+        <a href="{{ url_for('add_new_author') }}" class="nav-link">📝 Add Author</a>
+        <a href="{{ url_for('add_new_book') }}" class="nav-link">📚 Add Book</a>
     </div>
-  </div>
+</div>
 
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  {% for message in messages %}
-  <div class="flash-message">{{ message }}</div>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="flash-message">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 
-  <div class="controls">
+<div class="controls">
     <div class="search-group">
-      <form action="/" method="GET" style="display: flex; gap: 5px; flex-grow: 1;">
-        <input type="text" name="search" placeholder="Search..." value="{{ request.args.get('search', '') }}"
-          class="search-input">
-        <select name="sort" onchange="this.form.submit()">
-          <option value="title" {% if request.args.get('sort')=='title' or not request.args.get('sort') %}selected{%
-            endif %}>Sort by Title</option>
-          <option value="author" {% if request.args.get('sort')=='author' %}selected{% endif %}>Sort by Author</option>
-          <option value="year" {% if request.args.get('sort')=='year' %}selected{% endif %}>Sort by Year</option>
-        </select>
-        <button type="submit">Search</button>
-      </form>
-      {% if request.args.get('search') %}
-      <a href="/" class="clear-link">Clear</a>
-      {% endif %}
+        <form action="/" method="GET" style="display: flex; gap: 5px; flex-grow: 1;">
+            <input type="text" name="search" placeholder="Search..." value="{{ request.args.get('search', '') }}"
+                   class="search-input">
+            <select name="sort" onchange="this.form.submit()">
+                <option value="title" {% if request.args.get(
+                'sort')=='title' or not request.args.get('sort') %}selected{%
+                endif %}>Sort by Title</option>
+                <option value="author" {% if request.args.get(
+                'sort')=='author' %}selected{% endif %}>Sort by Author</option>
+                <option value="year" {% if request.args.get(
+                'sort')=='year' %}selected{% endif %}>Sort by Year</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+        {% if request.args.get('search') %}
+        <a href="/" class="clear-link">Clear</a>
+        {% endif %}
     </div>
-  </div>
+</div>
 
-  {% if books %}
-  {% for book in books %}
-  <div class="book">
+{% if books %}
+{% for book in books %}
+<div class="book">
     <img src="{{ book.cover_url }}" alt="Cover" width="80" height="100"
-      onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\'>📖</div>');">
+         onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\'>📖</div>');">
     <h3><a href="{{ url_for('book_detail', book_id=book.id) }}" class="book-title">{{ book.title }}</a></h3>
     <p>
       <span class="author-section">
         By <a href="{{ url_for('author_detail', author_id=book.author.id) }}" class="author-link">{{ book.author.name
           }}</a>
         <form action="{{ url_for('delete_author', author_id=book.author.id) }}" method="POST" class="author-delete-form"
-          onsubmit="return confirm('⚠️ WARNING ⚠️\n\nYou are about to delete the author {{ book.author.name }}.\n\nThis will PERMANENTLY DELETE:\n- The author\n- ALL books by this author\n\nThis action cannot be undone.\n\nAre you sure you want to proceed?');">
+              onsubmit="return confirm('⚠️ WARNING ⚠️\n\nYou are about to delete the author {{ book.author.name }}.\n\nThis will PERMANENTLY DELETE:\n- The author\n- ALL books by this author\n\nThis action cannot be undone.\n\nAre you sure you want to proceed?');">
           <button type="submit" class="author-delete-btn">Delete Author</button>
         </form>
       </span><br>
-      Published: {{ book.publication_year }}<br>
-      ISBN: {{ book.isbn }}
+        Published: {{ book.publication_year }}<br>
+        ISBN: {{ book.isbn }}
     </p>
     <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" style="display: inline"
-      onsubmit="return confirm('Delete this book?');">
-      <button type="submit" class="delete-btn">Delete</button>
+          onsubmit="return confirm('Delete this book?');">
+        <button type="submit" class="delete-btn">Delete</button>
     </form>
-  </div>
-  {% endfor %}
-  {% else %}
-  <div class="no-results">No books found.</div>
-  {% endif %}
+</div>
+{% endfor %}
+{% else %}
+<div class="no-results">No books found.</div>
+{% endif %}
 </body>
 
 </html>

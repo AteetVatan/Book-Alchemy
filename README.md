@@ -50,11 +50,6 @@ pip install -r requirements.txt
 python app.py
 ```
 
-5. (Optional) Populate with sample data:
-```bash
-sqlite3 data/library.sqlite < populate_library.sql
-```
-
 ## Usage
 
 1. Start the application:

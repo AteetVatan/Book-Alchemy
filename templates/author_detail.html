@@ -156,48 +156,48 @@
 </head>
 
 <body>
-    <div class="header">
-        <h1>Author Details</h1>
-        <a href="{{ url_for('show_home') }}" class="nav-link">← Back to Library</a>
-    </div>
+<div class="header">
+    <h1>Author Details</h1>
+    <a href="{{ url_for('show_home') }}" class="nav-link">← Back to Library</a>
+</div>
 
-    <div class="author-detail">
-        <h2 class="author-name">{{ author.name }}</h2>
-        <div class="author-meta">
-            Born: {{ author.birth_date.strftime('%B %d, %Y') }}<br>
-            {% if author.date_of_death %}
-            Died: {{ author.date_of_death.strftime('%B %d, %Y') }}
-            {% else %}
-            Status: Living
-            {% endif %}
-        </div>
-        <form action="{{ url_for('delete_author', author_id=author.id) }}" method="POST" class="delete-form"
-            onsubmit="return confirm('⚠️ WARNING ⚠️\n\nYou are about to delete the author {{ author.name }}.\n\nThis will PERMANENTLY DELETE:\n- The author\n- ALL {{ author.books|length }} book(s) by this author\n\nThis action cannot be undone.\n\nAre you sure you want to proceed?');">
-            <div class="warning-text">
-                <span class="warning-icon">⚠️</span>
-                Deleting this author will permanently delete all {{ author.books|length }} book(s) by this author
-            </div>
-            <button type="submit" class="delete-btn">Delete Author</button>
-        </form>
+<div class="author-detail">
+    <h2 class="author-name">{{ author.name }}</h2>
+    <div class="author-meta">
+        Born: {{ author.birth_date.strftime('%B %d, %Y') }}<br>
+        {% if author.date_of_death %}
+        Died: {{ author.date_of_death.strftime('%B %d, %Y') }}
+        {% else %}
+        Status: Living
+        {% endif %}
     </div>
+    <form action="{{ url_for('delete_author', author_id=author.id) }}" method="POST" class="delete-form"
+          onsubmit="return confirm('⚠️ WARNING ⚠️\n\nYou are about to delete the author {{ author.name }}.\n\nThis will PERMANENTLY DELETE:\n- The author\n- ALL {{ author.books|length }} book(s) by this author\n\nThis action cannot be undone.\n\nAre you sure you want to proceed?');">
+        <div class="warning-text">
+            <span class="warning-icon">⚠️</span>
+            Deleting this author will permanently delete all {{ author.books|length }} book(s) by this author
+        </div>
+        <button type="submit" class="delete-btn">Delete Author</button>
+    </form>
+</div>
 
-    <div class="books-section">
-        <h3>Books by {{ author.name }}</h3>
-        <div class="book-list">
-            {% for book in author.books %}
-            <div class="book-card">
-                <div class="book-cover">
-                    <img src="{{ book.cover_url }}" alt="Cover of {{ book.title }}"
-                        onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\'>📖</div>');">
-                </div>
-                <a href="{{ url_for('book_detail', book_id=book.id) }}" class="book-title">{{ book.title }}</a>
-                <span class="book-year">{{ book.publication_year }}</span>
+<div class="books-section">
+    <h3>Books by {{ author.name }}</h3>
+    <div class="book-list">
+        {% for book in author.books %}
+        <div class="book-card">
+            <div class="book-cover">
+                <img src="{{ book.cover_url }}" alt="Cover of {{ book.title }}"
+                     onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\'>📖</div>');">
             </div>
-            {% else %}
-            <p>No books found for this author.</p>
-            {% endfor %}
+            <a href="{{ url_for('book_detail', book_id=book.id) }}" class="book-title">{{ book.title }}</a>
+            <span class="book-year">{{ book.publication_year }}</span>
         </div>
+        {% else %}
+        <p>No books found for this author.</p>
+        {% endfor %}
     </div>
+</div>
 </body>
 
 </html>

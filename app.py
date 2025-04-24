@@ -3,6 +3,9 @@ import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 from data_models import db, Author, Book
+from sqlalchemy.exc import IntegrityError
+from stdnum import isbn
+from stdnum.exceptions import ValidationError
 
 app = Flask(__name__)
 
@@ -59,7 +62,7 @@ def show_home():
 def add_new_author():
     """Add a new author to the library."""
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['name'].strip()
         birth = request.form['birth_date']
         death = request.form['date_of_death']
 
@@ -69,16 +72,28 @@ def add_new_author():
         else:
             death_date = None
 
+        # Check for duplicate author name
+        authors = Author.query.all()
+        author_names = [author.name.lower().strip() for author in authors]
+        if name.lower().strip() in author_names:
+            flash(f'An author with the name "{name}" already exists.', 'error')
+            return render_template('add_author.html')
+
         author = Author(
-            name=name,
+            name=name.strip(),
             birth_date=birth_date,
             date_of_death=death_date
         )
 
-        db.session.add(author)
-        db.session.commit()
-
-        return render_template('add_author.html', message='Author added!')
+        try:
+            db.session.add(author)
+            db.session.commit()
+            flash('Author added successfully', 'success')
+            return redirect(url_for('show_home'))
+        except IntegrityError:
+            db.session.rollback()
+            flash(f'An author with the name "{name}" already exists.', 'error')
+            return render_template('add_author.html')
 
     return render_template('add_author.html')
 
@@ -87,25 +102,44 @@ def add_new_author():
 def add_new_book():
     """Add a new book to the library."""
     if request.method == 'POST':
-        isbn = request.form['isbn']
-        title = request.form['title']
+        isbn_number = request.form['isbn'].strip()
+        title = request.form['title'].strip()       
         year = int(request.form['publication_year'])
         author_id = int(request.form['author_id'])
 
+       #validate isbn 
+        try:
+            isbn.validate(isbn_number)
+        except ValidationError:
+            flash('Invalid ISBN. Please enter a valid 10 or 13-digit number. 13-digit ISBNs must start with 978 or 979.', 'error')
+            return render_template('add_book.html', authors=Author.query.all())
+
+
+        # Check for duplicate book ISBN
+        #get all book isbn and check if the isbn is already in the list
+        books = Book.query.all()
+        book_isbns = [book.isbn.strip() for book in books]
+        if isbn_number in book_isbns:
+            flash(f'A book with ISBN "{isbn_number}" already exists in the library.', 'error')
+            return render_template('add_book.html', authors=Author.query.all())
+
+        
         book = Book(
-            isbn=isbn,
+            isbn=isbn_number,
             title=title,
             publication_year=year,
             author_id=author_id
         )
-
-        db.session.add(book)
-        db.session.commit()
-
-        authors = Author.query.all()
-        return render_template('add_book.html',
-                               message='Book added!',
-                               authors=authors)
+        
+        try:
+            db.session.add(book)
+            db.session.commit()
+            flash('Book added successfully', 'success')
+            return redirect(url_for('show_home'))
+        except IntegrityError:
+            db.session.rollback()
+            flash(f'A book with ISBN "{isbn_number}" already exists in the library.', 'error')
+            return render_template('add_book.html', authors=Author.query.all())
 
     authors = Author.query.all()
     return render_template('add_book.html', authors=authors)

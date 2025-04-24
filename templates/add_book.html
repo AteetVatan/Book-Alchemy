@@ -2,150 +2,189 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add Book</title>
-    <style>
-        body {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 20px;
-          font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Add Book</title>
+  <style>
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
 
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-        }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-        .nav-link {
-          padding: 8px 15px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background: white;
-          color: #333;
-          text-decoration: none;
-          font-size: 14px;
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-        }
+    .nav-link {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-        .nav-link:hover {
-          background: #f5f5f5;
-          border-color: #bbb;
-        }
+    .nav-link:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
 
-        .success-message {
-          padding: 10px;
-          margin: 10px 0;
-          background: #e8f5e9;
-          border-radius: 4px;
-          color: #2e7d32;
-        }
+    .alert {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
 
-        form {
-          background: #fafafa;
-          padding: 20px;
-          border-radius: 4px;
-          border: 1px solid #eee;
-        }
+    .alert-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
 
-        .form-group {
-          margin-bottom: 15px;
-        }
+    .alert-error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
 
-        label {
-          display: block;
-          margin-bottom: 5px;
-          color: #333;
-        }
+    form {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
 
-        input,
-        select {
-          width: 100%;
-          padding: 8px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          font-size: 14px;
-          box-sizing: border-box;
-        }
+    .form-group {
+      margin-bottom: 15px;
+    }
 
-        button {
-          padding: 8px 15px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background: white;
-          cursor: pointer;
-          font-size: 14px;
-        }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
 
-        button:hover {
-          background: #f5f5f5;
-          border-color: #bbb;
-        }
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
 
-        .book-emoji {
-          width: 200px;
-          height: 280px;
-          font-size: 100px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #f5f5f5;
-          border-radius: 4px;
-          text-decoration: none;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          line-height: 1;
-        }
-    </style>
+    button {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
+
+    .book-emoji {
+      width: 200px;
+      height: 280px;
+      font-size: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      border-radius: 4px;
+      text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      line-height: 1;
+    }
+
+    .help-text {
+      margin-top: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .help-text ul {
+      margin: 5px 0;
+      padding-left: 20px;
+    }
+
+    .help-text li {
+      margin: 2px 0;
+    }
+  </style>
 </head>
 
 <body>
-<div class="header">
+  <div class="header">
     <h1>Add New Book</h1>
     <a href="{{ url_for('show_home') }}" class="nav-link">← Back to Library</a>
-</div>
+  </div>
 
-{% if message %}
-<div class="success-message">{{ message }}</div>
-{% endif %}
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert {% if 'success' in message %}alert-success{% else %}alert-error{% endif %}">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
 
-<form method="POST">
+  <form method="POST">
     <div class="form-group">
-        <label for="isbn">ISBN:</label>
-        <input type="text" id="isbn" name="isbn" required maxlength="13" placeholder="Enter 13-digit ISBN">
+      <label for="isbn">ISBN:</label>
+      <input type="text" id="isbn" name="isbn" required maxlength="13" placeholder="Enter ISBN number">
+      <div class="help-text">
+        <p>ISBN Requirements:</p>
+        <ul>
+          <li>Must be either 10 or 13 digits long</li>
+          <li>13-digit ISBNs must start with 978 or 979</li>
+          <li>Only numbers are allowed (no letters or special characters)</li>
+        </ul>
+      </div>
     </div>
     <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required placeholder="Enter book title">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required placeholder="Enter book title">
     </div>
     <div class="form-group">
-        <label for="publication_year">Publication Year:</label>
-        <input type="number" id="publication_year" name="publication_year" required min="1000" max="2100"
-               placeholder="YYYY">
+      <label for="publication_year">Publication Year:</label>
+      <input type="number" id="publication_year" name="publication_year" required min="1000" max="2100"
+        placeholder="YYYY">
     </div>
     <div class="form-group">
-        <label for="author_id">Author:</label>
-        <select id="author_id" name="author_id" required>
-            <option value="">Select an author</option>
-            {% for author in authors %}
-            <option value="{{ author.id }}">{{ author.name }}</option>
-            {% endfor %}
-        </select>
+      <label for="author_id">Author:</label>
+      <select id="author_id" name="author_id" required>
+        <option value="">Select an author</option>
+        {% for author in authors %}
+        <option value="{{ author.id }}">{{ author.name }}</option>
+        {% endfor %}
+      </select>
     </div>
     <button type="submit">Add Book</button>
-</form>
+  </form>
 
-<div class="book-cover-preview">
+  <div class="book-cover-preview">
     <img id="cover-preview" src="#" alt="Book cover preview" width="200" height="280" style="display: none;"
-         onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\' style=\'font-size: 100px;\'>📚</div>');">
+      onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'book-emoji\' style=\'font-size: 100px;\'>📚</div>');">
     <div class="book-emoji" id="default-cover" style="font-size: 100px;">📚</div>
-</div>
-
+  </div>
 </body>
 
 </html>

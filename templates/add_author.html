@@ -2,115 +2,132 @@
 <html>
 
 <head>
-    <title>Add Author</title>
-    <style>
-        body {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 20px;
-          font-family: Arial, sans-serif;
-        }
+  <title>Add Author</title>
+  <style>
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
 
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-        }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-        .nav-link {
-          padding: 8px 15px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background: white;
-          color: #333;
-          text-decoration: none;
-          font-size: 14px;
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-        }
+    .nav-link {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-        .nav-link:hover {
-          background: #f5f5f5;
-          border-color: #bbb;
-        }
+    .nav-link:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
 
-        .success-message {
-          padding: 10px;
-          margin: 10px 0;
-          background: #e8f5e9;
-          border-radius: 4px;
-          color: #2e7d32;
-        }
+    .alert {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
 
-        form {
-          background: #fafafa;
-          padding: 20px;
-          border-radius: 4px;
-          border: 1px solid #eee;
-        }
+    .alert-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
 
-        .form-group {
-          margin-bottom: 15px;
-        }
+    .alert-error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
 
-        label {
-          display: block;
-          margin-bottom: 5px;
-          color: #333;
-        }
+    form {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
 
-        input {
-          width: 100%;
-          padding: 8px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          font-size: 14px;
-          box-sizing: border-box;
-        }
+    .form-group {
+      margin-bottom: 15px;
+    }
 
-        button {
-          padding: 8px 15px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background: white;
-          cursor: pointer;
-          font-size: 14px;
-        }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
 
-        button:hover {
-          background: #f5f5f5;
-          border-color: #bbb;
-        }
-    </style>
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
+  </style>
 </head>
 
 <body>
-<div class="header">
+  <div class="header">
     <h1>Add New Author</h1>
     <a href="{{ url_for('show_home') }}" class="nav-link">← Back to Library</a>
-</div>
+  </div>
 
-{% if message %}
-<div class="success-message">{{ message }}</div>
-{% endif %}
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if 'success' in message %}alert-success{% else %}alert-error{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
 
-<form method="POST">
+  <form method="POST">
     <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
     </div>
     <div class="form-group">
-        <label for="birth_date">Birth Date:</label>
-        <input type="date" id="birth_date" name="birth_date" required>
+      <label for="birth_date">Birth Date:</label>
+      <input type="date" id="birth_date" name="birth_date" required>
     </div>
     <div class="form-group">
-        <label for="date_of_death">Date of Death (optional):</label>
-        <input type="date" id="date_of_death" name="date_of_death">
+      <label for="date_of_death">Date of Death (optional):</label>
+      <input type="date" id="date_of_death" name="date_of_death">
     </div>
     <button type="submit">Add Author</button>
-</form>
+  </form>
 </body>
 
 </html>
